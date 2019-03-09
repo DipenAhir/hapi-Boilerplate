@@ -1,0 +1,5 @@
+{
+    "200":"Success",
+    "400":"Mandatory field missing",
+    "500":"internal server error"
+}
