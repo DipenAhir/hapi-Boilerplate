@@ -1,13 +1,11 @@
-const Home = require('./handlers/home');
 const user = require('./handlers/user');
+const login = require('./handlers/login');
 
 exports.register = (plugin, options, next) => {
 
   plugin.route([
-    { method: 'GET', path: '/', config: Home.hello },
     { method: 'POST', path: '/user', config: user.post },
-    { method: 'GET', path: '/restricted', config: Home.restricted },
-    { method: 'GET', path: '/{path*}', config: Home.notFound }
+    { method: 'POST', path: '/login', config: login.post },
   ]);
 
   next();
@@ -16,3 +14,4 @@ exports.register = (plugin, options, next) => {
 exports.register.attributes = {
   name: 'api'
 };
+//rjmreis

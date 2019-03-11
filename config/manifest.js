@@ -1,3 +1,7 @@
+require("./mongoDB")
+var LANGUAGES = "en,hi"
+var DEFAULT_LANGUAGE = "hi"
+
 const envKey = key => {
   const env = process.env.NODE_ENV || 'development';
 
@@ -21,6 +25,7 @@ const envKey = key => {
 };
 
 const manifest = {
+
   connections: [
     {
       host: envKey('host'),
@@ -45,11 +50,7 @@ const manifest = {
         register: 'good',
         options: {
           ops: { interval: 60000 },
-          reporters: {
-            console: [
-              { module: 'good-squeeze', name: 'Squeeze', args: [{ error: '*' }] }, { module: 'good-console' }, 'stdout'
-            ]
-          }
+          reporters: { console: [{ module: 'good-console' }, 'stdout'] }
         }
       }
     },
@@ -70,7 +71,18 @@ const manifest = {
     },
     {
       plugin: './api'
-      , options: { routes: { prefix: '/api' } }
+      // , options: { routes: { prefix: '/api' } }
+    },
+    {
+      plugin: {
+        register: 'hapi-i18n',
+        options: {
+          locales: "en,hi".split(','),
+          directory: '../locale',
+          languageHeaderField: 'lang',
+          defaultLocale: "hi"
+        }
+      }
     }
   ]
 };

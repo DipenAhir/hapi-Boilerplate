@@ -29,8 +29,11 @@
     "good-squeeze": "^5.0.2",
     "hapi": "^16.6.2",
     "hapi-auth-jwt2": "^7.3.0",
+    "hapi-i18n": "^1.0.5",
     "hapi-swagger": "8.0.0",
     "inert": "^4.2.1",
+    "mongodb": "^3.1.13",
+    "password-hash": "^1.2.2",
     "vision": "^4.1.1"
   },
   "devDependencies": {

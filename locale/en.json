@@ -1,0 +1,12 @@
+{
+    "201":"Created",
+    "200":"Success",
+    "400":"Mandatory field missing",
+    "500":"internal server error",
+    "409": {
+        "409": "duplicate  in hi"
+    },
+    "genericErrMsg":{
+        "101":"aaaaaaaaaaaaa"
+    }
+}

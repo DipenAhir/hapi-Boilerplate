@@ -7,8 +7,8 @@ var userCollection = require("../../../models/users")
 
 module.exports = {
 
-    description: 'This API used to create a new user',
-    tags: ["api", "user"],
+    description: 'This API used to login a user',
+    tags: ["api", "login"],
     auth: false,
     response: {
         status: {
@@ -21,7 +21,6 @@ module.exports = {
     validate: {
         headers: headerValidator.headerAuthNotRequired,
         payload: Joi.object({
-            userName: Joi.string().required().min(4).max(10).description("pass unique username").error(new Error("field userName is missing or invalid it must be lesthen 10 char and gretherthen 4 caht")),
             email: Joi.string().email().required().description("enter email address").error(new Error("field email is missing or invalid format")),
             password: Joi.string().required().min(4).max(10).description("enter password").error(new Error("field password is missing  or invalid it must be lesthen 10 char and gretherthen 4 caht"))
         }).unknown(),
@@ -33,34 +32,32 @@ module.exports = {
 
         function checkUserExists() {
             return new Promise(function (resolve, reject) {
-                let condition = { "$or": [{ email: request.payload.email }, { userName: request.payload.userName }] }
+                let condition = { email: request.payload.email }
                 userCollection.read(condition, (err, result) => {
                     if (err) {
                         return reject("ASPLPALSW ", err)
                     } else if (result && result.length) {
-                        return reject({ message: "username or email id aleady exists." })
+                        var hashedPassword = result[0].password;
+                        if (passwordHash.verify(request.payload.password, hashedPassword)) {
+                            return resolve(true)
+                        } else {
+                            return reject({ message: "password not match" })
+                        }
                     } else {
-                        return resolve(true)
+                        return reject({ message: "email id not exists" })
                     }
                 })
             });
         }
-        function createNewUser() {
+        function genrateToken() {
             return new Promise(function (resolve, reject) {
-                request.payload["password"] = passwordHash.generate(request.payload["password"]);
-                userCollection.insertOne(request.payload, (err, result) => {
-                    if (err) {
-                        return reject("ASPLPALSW ", err)
-                    } else {
-                        return resolve(true)
-                    }
-                })
+              
             });
         }
 
 
         checkUserExists()
-            .then(() => { return createNewUser(); })
+            .then(() => { return genrateToken(); })
             .then(() => { return reply({ message: 'Hello hapi!' }).code(201); })
             .catch((data) => { return reply({ message: data.message }).code(409); })
     }
