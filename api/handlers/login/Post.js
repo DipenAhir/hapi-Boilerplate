@@ -1,7 +1,6 @@
 const Joi = require("joi");
 var passwordHash = require('password-hash');
-
-const localization = require("../../../locale");
+const localization = require("../../../config/locales");
 const headerValidator = require("../../../config/header")
 var userCollection = require("../../../models/users")
 
@@ -44,14 +43,14 @@ module.exports = {
                             return reject({ message: "password not match" })
                         }
                     } else {
-                        return reject({ message: "email id not exists" })
+                        return reject({ message: request.i18n.__('201') })
                     }
                 })
             });
         }
         function genrateToken() {
             return new Promise(function (resolve, reject) {
-              
+
             });
         }
 

@@ -77,10 +77,10 @@ const manifest = {
       plugin: {
         register: 'hapi-i18n',
         options: {
-          locales: "en,hi".split(','),
-          directory: '../locale',
+          locales: ["hi", "en"],
+          directory: __dirname+'/locales',
           languageHeaderField: 'lang',
-          defaultLocale: "hi"
+          defaultLocale: "en"
         }
       }
     }

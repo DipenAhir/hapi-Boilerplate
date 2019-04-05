@@ -1,7 +1,8 @@
 const Joi = require("joi");
 var passwordHash = require('password-hash');
+var config = require("../../../config/locales")
 
-const localization = require("../../../locale");
+const localization = require("../../../config/locales");
 const headerValidator = require("../../../config/header")
 var userCollection = require("../../../models/users")
 
